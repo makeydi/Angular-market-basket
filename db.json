@@ -21,13 +21,6 @@
   ],
   "basket": [
     {
-      "id": 1,
-      "name": "Popcorn",
-      "price": 3,
-      "image": "https://png.pngtree.com/png-vector/20210414/ourlarge/pngtree-popcorn-box-png-image_3218567.jpg",
-      "quantity": 3
-    },
-    {
       "id": 2,
       "name": "Snickers",
       "price": 4,
@@ -35,11 +28,18 @@
       "quantity": 5
     },
     {
+      "id": 1,
+      "name": "Popcorn",
+      "price": 3,
+      "image": "https://png.pngtree.com/png-vector/20210414/ourlarge/pngtree-popcorn-box-png-image_3218567.jpg",
+      "quantity": 3
+    },
+    {
       "id": 3,
       "name": "Soda",
       "price": 2,
       "image": "https://static6.depositphotos.com/1011415/607/v/600/depositphotos_6072808-stock-illustration-cola-can.jpg",
-      "quantity": 1
+      "quantity": 2
     }
   ]
 }
