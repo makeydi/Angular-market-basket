@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {BasketComponent} from "../basket/basket.component";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
     selector: 'app-header',
@@ -9,12 +10,11 @@ import {BasketComponent} from "../basket/basket.component";
 
 export class HeaderComponent implements OnInit {
 
-    quantityElements: number
+    checkToken: any
 
-    constructor() {
+    constructor(public auth: AuthService, public basket: BasketComponent) {
     }
 
     ngOnInit(): void {
-        this.quantityElements = BasketComponent.prototype.totalQuantity
     }
 }

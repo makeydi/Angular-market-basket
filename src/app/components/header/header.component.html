@@ -1,10 +1,37 @@
 <mat-toolbar>
     <span>Cinema Shop</span>
-    <div>
-        <button routerLink="" mat-icon-button class="basket example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <div class="button-container">
+        <button *ngIf="!auth.isAuthenticated()" aria-label="Example icon-button with heart icon"
+                class="basket example-icon favorite-icon"
+                mat-icon-button
+                routerLink="registration">
+            Registration
+            <mat-icon>person_add</mat-icon>
+        </button>
+        <button *ngIf="!auth.isAuthenticated()" aria-label="Example icon-button with heart icon"
+                class="basket example-icon favorite-icon"
+                mat-icon-button routerLink="log-in">
+            Log in
+            <mat-icon>login</mat-icon>
+        </button>
+        <button aria-label="Example icon-button with heart icon" class="basket example-icon favorite-icon"
+                mat-icon-button
+                routerLink="products">
             <mat-icon>shop</mat-icon>
         </button>
-        <button routerLink="basket" mat-icon-button class="basket example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-            <mat-icon>{{quantityElements}}shopping_cart</mat-icon>
-        </button></div>
+        <button *ngIf="auth.isAuthenticated()" aria-label="Example icon-button with heart icon"
+                class="basket example-icon favorite-icon"
+                mat-icon-button
+                routerLink="basket">
+            <div>{{basket.quantity$.value}}</div>
+
+            <mat-icon>shopping_cart</mat-icon>
+        </button>
+        <button (click)="auth.logout()" *ngIf="auth.isAuthenticated()"
+                aria-label="Example icon-button with heart icon"
+                class="basket example-icon favorite-icon" mat-icon-button routerLink="products">
+            Exit
+            <mat-icon>logout</mat-icon>
+        </button>
+    </div>
 </mat-toolbar>

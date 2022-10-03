@@ -5,4 +5,23 @@
 
 button {
     margin-right: 10px;
+    text-align: center;
+    font-size: 16px;
+    align-item: center;
+    padding: 5px 8px;
+    font-weight: bold;
+    border-radius: 6px;
+}
+
+mat-icon {
+    font-size: 18px;
+    height: 100%;
+}
+
+.button-container {
+    display: flex;
+}
+
+.basket {
+    display: flex;
 }

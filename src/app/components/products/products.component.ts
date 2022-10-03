@@ -16,14 +16,14 @@ export class ProductsComponent implements OnInit {
     basket: IProducts[];
     basketSubscription: Subscription;
 
-    constructor(private ProductService: ProductService) {
+    constructor(private productService: ProductService) {
     }
 
     ngOnInit(): void {
-        this.productsSubscription = this.ProductService.getProducts().subscribe((data) => {
+        this.productsSubscription = this.productService.getProducts().subscribe((data) => {
             this.products = data;
         })
-        this.basketSubscription = this.ProductService.getProductFromBasket().subscribe((data) => {
+        this.basketSubscription = this.productService.getProductFromBasket().subscribe((data) => {
             this.basket = data
         })
     }
@@ -39,12 +39,12 @@ export class ProductsComponent implements OnInit {
     }
 
     postToBasket(product: IProducts) {
-        this.ProductService.postProductToBasket(product).subscribe((data) => this.basket.push(data))
+        this.productService.postProductToBasket(product).subscribe((data) => this.basket.push(data))
     }
 
     updateToBasket(product: IProducts) {
         product.quantity += 1;
-        this.ProductService.updateProductToBasket(product).subscribe(() => {
+        this.productService.updateProductToBasket(product).subscribe(() => {
         })
     }
 

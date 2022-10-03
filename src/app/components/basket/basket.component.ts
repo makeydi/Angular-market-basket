@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {IProducts} from "../../models/product";
-import {Subscription} from "rxjs";
+import {BehaviorSubject, Subscription} from "rxjs";
 import {ProductService} from "../../services/service.service";
+import {Router} from "@angular/router";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
     selector: 'app-basket',
@@ -12,20 +14,24 @@ import {ProductService} from "../../services/service.service";
 export class BasketComponent implements OnInit {
 
     basket: IProducts[]
-    basketSubscription: Subscription;
-    totalPrice: number;
-    totalQuantity: number;
+    basketSubscription: Subscription
+    totalPrice: number
+    public quantity$: BehaviorSubject<number> = new BehaviorSubject<number>(1)
+    totalQuantity: number
 
-    constructor(private ProductService: ProductService) {
+    constructor(private productService: ProductService, private router: Router, private auth: AuthService) {
     }
 
     ngOnInit(): void {
-        this.basketSubscription = this.ProductService.getProductFromBasket().subscribe((data) => {
+        this.basketSubscription = this.productService.getProductFromBasket().subscribe((data) => {
             this.basket = data;
             this.totalPrice = 0;
             this.totalQuantity = 0;
             this.totalQuantity = this.countTotalQuantity(data);
             this.totalPrice = this.countTotalPrice(data);
+            this.quantity$.subscribe()
+            this.quantity$.next(this.totalQuantity);
+            console.log(this.quantity$.value)
         })
     }
 
@@ -35,14 +41,14 @@ export class BasketComponent implements OnInit {
 
     minusItemFromBasket(item: IProducts) {
         if (item.quantity === 1) {
-            this.ProductService.removeProductFromBasket(item.id).subscribe(() => {
+            this.productService.removeProductFromBasket(item.id).subscribe(() => {
                 let element = this.basket.findIndex((data) => data.id === item.id)
                 this.basket.splice(element, 1)
                 this.totalPrice -= item.price;
             })
         } else {
             item.quantity -= 1;
-            this.ProductService.updateProductToBasket(item).subscribe(() => {
+            this.productService.updateProductToBasket(item).subscribe(() => {
             })
             if ((item.name == 'Snickers') && ((item.quantity % 5) === 4)) {
                 this.totalPrice += item.price
@@ -56,7 +62,7 @@ export class BasketComponent implements OnInit {
         if ((item.name == 'Snickers') && ((item.quantity % 5) === 0)) {
             this.totalPrice -= item.price
         } else this.totalPrice += item.price;
-        this.ProductService.updateProductToBasket(item).subscribe(() => {
+        this.productService.updateProductToBasket(item).subscribe(() => {
         })
         return this.totalPrice
     }
@@ -74,6 +80,7 @@ export class BasketComponent implements OnInit {
     countTotalQuantity(data: IProducts[]) {
         data.forEach((element) => {
             this.totalQuantity += element.quantity
+
         })
         return this.totalQuantity
     }
